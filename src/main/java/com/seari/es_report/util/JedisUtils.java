@@ -1,8 +1,5 @@
 package com.seari.es_report.util;
 
-import com.alibaba.fastjson.JSON;
-import com.seari.entity.Claims;
-import com.seari.entity.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +7,6 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -230,24 +226,5 @@ public class JedisUtils {
         return res;
     }
 
-    /**
-     * 获取当前登录用户
-     * @return
-     */
-    public Claims getClaims(HttpServletRequest request,String header){
-        String tokenKey = request.getHeader(header);
-        String token = getString(tokenKey);
-        return JwtUtils.decodeToken(token);
-    }
 
-    /**
-     * 获取当前登录用户
-     * @return
-     */
-    public SysUser getLoginUser(HttpServletRequest request, String header){
-        String tokenKey = request.getHeader(header);
-        String token = getString(tokenKey);
-        Claims claim = JwtUtils.decodeToken(token);
-        return JSON.parseObject(JSON.toJSONString(claim.getData()),SysUser.class);
-    }
 }
